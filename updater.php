@@ -9,9 +9,9 @@
  */
 class Codingbin_Updater {
 
-    public static $access_token = 'enter your access token'; // its needed if repo is private
+    public static $access_token = 'f901a88b7d703722928a365e0ac8f2f064a93354'; // its needed if repo is private
     public static $plugin_dir=codingbin_Path;  // full path i.e /wp-content/plugins/pluginname 
-    public static $plugin_file='WordpressUpdater.php';  // /wp-content/plugins/pluginname/plugin.php
+    public static $plugin_file='wordpressupdater/WordpressUpdater.php';  //pluginname/plugin.php
     public static $endpoint='https://api.github.com/repos/CodingBingit/wordpressupdater/releases/latest';
     public static $gitrepourl='https://github.com/CodingBingit/wordpressupdater';
     /**
@@ -69,9 +69,8 @@ class Codingbin_Updater {
         ));
         if ( ! is_wp_error( $request ) ) {
             $response = json_decode($request['body'], true);
-            echo "<pre>";print_r($response);die;
             $tag_name = $response['tag_name'];
-            echo $newest_version = ltrim( $tag_name, 'v');
+            $newest_version = ltrim( $tag_name, 'v');
             update_option( 'codingbin_newest_version', $newest_version );
             update_option( 'codingbin_last_updated', '' );
             update_option( 'codingbin_zip_url', $response['zipball_url'] );
@@ -100,11 +99,12 @@ class Codingbin_Updater {
         }
 
         $update_plugins->response[self::$plugin_file] = (object)array(
-            'slug'         => 'Elead',
+            'slug'         => 'Updater',
             'new_version'  => get_option( 'codingbin_newest_version' ), // The newest version
             'url'          => 'http://codingbin.com', // Informational
             'package'      => get_option( 'codingbin_zip_url' ) . '?access_token=' . self::$access_token 
         );
+        //echo "<pre>"; print_r($update_plugins);die;
         return $update_plugins;
     }
 
@@ -122,7 +122,7 @@ class Codingbin_Updater {
         if ( !isset( $response->slug ) || $response->slug )
             return false;
         $response->slug = self::$plugin_file;
-        $response->plugin_name  = 'Elead';
+        $response->plugin_name  = 'Updater';
         $response->version = get_option( 'codingbin_newest_version' );
         $response->author = 'codingbin';
         $response->homepage = 'http://codingbin.com';
@@ -173,8 +173,8 @@ class Codingbin_Updater {
         $activate = activate_plugin( WP_PLUGIN_DIR.'/'.self::$plugin_file );
 
         // Output the update message
-        $fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'Elead' );
-        $success = __( 'Plugin reactivated successfully.', 'Elead' );
+        $fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'Updater' );
+        $success = __( 'Plugin reactivated successfully.', 'Updater' );
         echo is_wp_error( $activate ) ? $fail : $success;
         return $result;
     }
