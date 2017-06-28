@@ -10,10 +10,10 @@
 class Codingbin_Updater {
 
     public static $access_token = 'enter your access token'; // its needed if repo is private
-    public static $plugin_dir='enter your plugin dir path';  // full path i.e /wp-content/plugins/pluginname 
-    public static $plugin_file='plugin main file path';  // /wp-content/plugins/pluginname/
-    public static $endpoint='https://api.github.com/repos/codingbin/testplugin/releases/latest';
-    public static $gitrepourl='https://github.com/codingbin/testplugin';
+    public static $plugin_dir=codingbin_Path;  // full path i.e /wp-content/plugins/pluginname 
+    public static $plugin_file=codingbin_Path.'WordpressUpdater.php';  // /wp-content/plugins/pluginname/plugin.php
+    public static $endpoint='https://api.github.com/repos/CodingBingit/wordpressupdater/releases/latest';
+    public static $gitrepourl='https://github.com/CodingBingit/wordpressupdater';
     /**
      * pseudo-constructor
      *
