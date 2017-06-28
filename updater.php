@@ -11,7 +11,7 @@ class Codingbin_Updater {
 
     public static $access_token = 'enter your access token'; // its needed if repo is private
     public static $plugin_dir=codingbin_Path;  // full path i.e /wp-content/plugins/pluginname 
-    public static $plugin_file=codingbin_Path.'WordpressUpdater.php';  // /wp-content/plugins/pluginname/plugin.php
+    public static $plugin_file='WordpressUpdater.php';  // /wp-content/plugins/pluginname/plugin.php
     public static $endpoint='https://api.github.com/repos/CodingBingit/wordpressupdater/releases/latest';
     public static $gitrepourl='https://github.com/CodingBingit/wordpressupdater';
     /**
@@ -67,12 +67,11 @@ class Codingbin_Updater {
         $request = wp_remote_get( $url, array(
             'timeout' => 120
         ));
-        
         if ( ! is_wp_error( $request ) ) {
-            
             $response = json_decode($request['body'], true);
+            echo "<pre>";print_r($response);die;
             $tag_name = $response['tag_name'];
-            $newest_version = ltrim( $tag_name, 'v');
+            echo $newest_version = ltrim( $tag_name, 'v');
             update_option( 'codingbin_newest_version', $newest_version );
             update_option( 'codingbin_last_updated', '' );
             update_option( 'codingbin_zip_url', $response['zipball_url'] );
